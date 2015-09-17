@@ -16,8 +16,8 @@ class Stock_real( models.Model ) :
     updated = models.DateTimeField( auto_now_add = False, auto_now = True )
     
     def __unicode__( self ) :
-    
-        return self.product.name
+        """ unicode function for the printing of the stock """
+        return ( "P:{0}, Q:{1}" ).format( self.product.name, self.quantity )
     
     #End of unicode function
     
@@ -36,7 +36,7 @@ class Inventory_real( models.Model ) :
     stocks = models.ManyToManyField( Stock_real, verbose_name="list of stocks" )
     
     def __unicode__( self ) :
-    
+        """  unicode function for the printing of the inventory """
         return self.name
     
     #End of unicode function
@@ -54,8 +54,8 @@ class Purchase_real( models.Model ) :
     updated = models.DateTimeField( auto_now_add = False, auto_now = True )
     
     def __unicode__( self ) :
-
-        return "#%d-Pruchase from %s" % ( self.id, self.provider.name )
+        """ unicode function for the printing of the purchase """
+        return ( "#{0}-Pruchase from {1}" ).format( self.id, self.provider.name )
 
     #End of unicode function
     
@@ -75,7 +75,10 @@ class Detail_purchase_real( models.Model ) :
         default = 0.0 )
     
     def save( self ) :
-
+        """ 
+        Save, this function will edit the buy_price of the product and then it 
+        will save the product and then the detail 
+        """
         self.product.buy_price = self.purchase_price
         self.product.save()
         super( Detail_purchase_real, self ).save()
@@ -83,8 +86,8 @@ class Detail_purchase_real( models.Model ) :
     #End of save function
     
     def __unicode__( self ) :
-        
-        return "%s" % ( self.product.name )
+        """ unicode function for the printing of the detail """
+        return ( '{0}' ).format( self.product.name )
     
     #End of unicode function
         
